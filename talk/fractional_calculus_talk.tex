@@ -1,0 +1,135 @@
+\documentclass[12pt]{article}
+
+\usepackage{dsfont}
+\usepackage{amsmath, amssymb,amsthm}
+\usepackage{bm}
+\usepackage{cite}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{comment}
+\usepackage{extarrows}
+\usepackage{geometry}
+\geometry{hmargin=2.5cm,vmargin=2.5cm}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks = true,
+	citecolor = cyan,
+	linkcolor = magenta,
+	breaklinks = true,
+	linktocpage
+}
+
+\usepackage{fancyhdr}
+% Define a custom style specifically for the first page
+\fancypagestyle{firstpage}{
+    \fancyhf{} % Clear all headers and footers
+    \fancyfoot[C]{\thepage}
+    \fancyfoot[R]{\today} % Put the date in the right footer
+    \renewcommand{\headrulewidth}{0pt} % Remove top line
+}
+
+\usepackage{mathtools}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
+\usepackage{tikz}
+ \usepackage{pgfplots}
+%\usepackage{refcheck}
+
+
+\allowdisplaybreaks
+
+\theoremstyle{definition}
+\newtheorem*{definition*}{Definition}
+\newtheorem*{proposition*}{Proposition}
+\newtheorem*{remark*}{Remark}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem*{corollary*}{Corollary}
+\newtheorem*{lemma*}{Lemma}
+\newtheorem*{axiom*}{Axiom}
+\newtheorem*{example*}{Example}
+\newtheorem*{solution*}{Solution}
+
+%\counterwithin{equation}{section}
+
+\newcommand{\D}[2]{\prescript{}{#1}{D}_x^{#2}}
+\newcommand{\I}[2]{\prescript{}{#1}{I}_x^{#2}}
+
+%%%%%
+\begin{document}
+%%%%%
+
+\begin{center}
+{\bf {\Large Introduction to Fractional Calculus}}\\[1cm]
+\end{center}
+
+
+\begin{example*}
+Compute $4!$
+\end{example*}
+
+\begin{solution*}
+$4! = 1\cdot 2 \cdot 3 \cdot 4 = 24$
+\end{solution*}
+
+\begin{example*}
+Using the fact that
+\[
+\Gamma(2) = 1! = 1,\qquad \Gamma(3) = 2! = 2,\qquad \Gamma(5/2) = \frac{3}{4}\sqrt{\pi}
+\]
+evaluate
+\begin{itemize}
+\item[(a)] $\I{0}{1/2}[x]$
+\item[(b)] $\I{0}{1/2}[x^{3/2}]$
+\end{itemize}
+\end{example*}
+
+\begin{solution*}
+First, 
+\[
+\Gamma(5/2) = \Gamma(3/2+1) = \frac{3}{2}\, \Gamma(3/2) = \frac{3}{2}\cdot \frac{1}{2}\, \Gamma(1/2) = \frac{3}{4}\sqrt{\pi},
+\]
+\begin{itemize}
+\item[(a)] Using the power rule for the Riemann--Liouville fractional derivative we get
+\[
+\I{0}{1/2}[x] = \frac{\Gamma(2)}{\Gamma(2+1/2)} x^{3/2} = \frac{\Gamma(2)}{\Gamma(5/2)}x^{3/2} = \frac{1}{\frac{3}{4}\sqrt{\pi}} x^{3/2} = \frac{4}{3\sqrt{\pi}}x^{3/2}.
+\]
+\item[(b)]Next,
+\[
+\I{0}{1/2}[x^{3/2}] = \frac{\Gamma(5/2)}{\Gamma(3)} x^2 = \frac{\frac{3}{4}\sqrt{\pi}}{2} x^2.
+\]
+\end{itemize}
+Thus,
+\begin{align*}
+\I{0}{1/2} \I{0}{1/2}[x] &= \I{0}{1/2}\bigg[\frac{4}{3\sqrt{\pi}}x^{3/2}\bigg]
+= \frac{4}{3\sqrt{\pi}} \I{0}{1/2}[x^{3/2}] \\
+&= \frac{4}{3\sqrt{\pi}}\cdot \frac{\frac{3}{4}\sqrt{\pi}}{2} x^2 \\
+& = \frac{x^2}{2} = \I{0}{1}[x] = \int_0^x t\, dt.
+\end{align*}
+\end{solution*}
+
+\begin{example*}
+Using the fact that 
+\[
+\Gamma\bigg(\frac{7}{2}\bigg) = \frac{15\sqrt{\pi}}{8},
+\]
+compute the fractional derivative of $x^2$.
+\end{example*}
+
+\begin{solution*}
+Computing the half derivative of $x^2$ we obtain
+\[
+\D{0}{1/2}[x^2] = \frac{d}{dx}\big(\I{0}{1/2}[x^2]\big) =
+ \frac{d}{dx}\bigg(\frac{\Gamma(3)}{\Gamma(7/2)}x^{5/2}\bigg) 
+= \frac{5\, \Gamma(3)}{2\, \Gamma(7/2)} x^{3/2} = \frac{5}{\frac{15\sqrt{\pi}}{8}} x^{3/2} = \frac{8 x^{3/2}}{3\sqrt{\pi}}.
+\]
+Differentiating the result obtained
+\[
+\D{0}{1/2}\bigg[\frac{8 x^{3/2}}{3\sqrt{\pi}}\bigg] = 
+\frac{8}{3\sqrt{\pi}} \frac{d}{dx}\big(\I{0}{1/2}[x^{3/2}]\big)
+=\frac{8}{3\sqrt{\pi}} \cdot \frac{\frac{3}{4}\sqrt{\pi}}{2} \frac{d}{dx}(x^2) = 2 x.
+\]
+As expected,
+\[
+\D{0}{1/2}\circ \D{0}{1/2}[x^2] = \D{0}{1}[x^2] = \frac{d(x^2)}{dx}.
+\]
+\end{solution*}
+
+\end{document}
