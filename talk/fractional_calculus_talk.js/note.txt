@@ -1,0 +1,9 @@
+In terminal type
+
+> npm start
+
+and then open the link
+
+http://localhost:8000
+
+in a web browser 
