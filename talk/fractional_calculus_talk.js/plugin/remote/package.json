@@ -1,0 +1,31 @@
+{
+  "name": "reveal.js-remote",
+  "description": "A presentation control server",
+  "author": "Jochen Wierum, Cologne Intelligence GmbH",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cologneintelligence/reveal.js-remote.git"
+  },
+  "type": "module",
+  "dependencies": {
+    "command-line-args": "^6.0.2",
+    "command-line-usage": "^7.0.4",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "socket.io": "^4.8.3",
+    "qrcode": "^1.5.4",
+    "uuid": "^14.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.29.6",
+    "@babel/preset-env": "^7.29.2",
+    "@rollup/plugin-babel": "^7.0.0",
+    "@rollup/plugin-commonjs": "^29.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-terser": "^1.0.0",
+    "core-js": "^3.49.0",
+    "gulp": "^5.0.1",
+    "rollup": "^4.60.2"
+  }
+}

@@ -1,0 +1,220 @@
+import * as io from '../../socket.io/socket.io.esm.min.js';
+
+window.slideControl = window.slideControl || (function () {
+    let socket;
+    let allowSwipe = true;
+    let slideUrl = null;
+
+    const ZOOM_STEP = 0.1;
+    const ZOOM_MIN = 0.4;
+    const ZOOM_MAX = 2.0;
+    let currentZoom = parseFloat(localStorage.getItem('remoteUiZoom') || '1');
+
+    function applyZoom() {
+        document.documentElement.style.zoom = currentZoom;
+    }
+
+    function zoomIn() {
+        currentZoom = Math.min(ZOOM_MAX, Math.round((currentZoom + ZOOM_STEP) * 10) / 10);
+        localStorage.setItem('remoteUiZoom', currentZoom);
+        applyZoom();
+    }
+
+    function zoomOut() {
+        currentZoom = Math.max(ZOOM_MIN, Math.round((currentZoom - ZOOM_STEP) * 10) / 10);
+        localStorage.setItem('remoteUiZoom', currentZoom);
+        applyZoom();
+    }
+
+    function init() {
+        const path = window.location.pathname.replace(/\/_remote\/ui\/[^\/]*(?:\?.*)?$/, '/socket.io'),
+            id = window.location.search.substring(1);
+
+        applyZoom();
+        setupKeyboard();
+        setupSwipe();
+
+        socket = io.connect({path: path});
+
+        socket.on('connect_error', function (err) {
+            console.warn("Could not connect to socket.io-remote server", err);
+        });
+
+        socket.on('reconnect_error', function (err) {
+            console.warn("Could not reconnect to socket.io-remote server", err);
+        });
+
+        socket.on('connect_timeout', function () {
+            console.warn("Could not connect to socket.io-remote server (timeout)");
+        });
+
+        socket.on('reconnect_failed', function (err) {
+            console.warn("Could not reconnect to socket.io-remote server - this was the last try, giving up", err);
+        });
+
+        socket.on('error', function (err) {
+            console.warn("Unknown error in socket.io", err);
+        });
+
+        socket.on('connect', function () {
+            console.info("Connected - sending welcome message");
+
+            socket.emit('start', {
+                type: 'remote',
+                id: id
+            });
+        });
+
+        socket.on('notes_changed', function (data) {
+            let text = data.text;
+            if (text === undefined || text === null || text.trim() === "") {
+                text = "(The current slide has no speaker notes)";
+            }
+            document.getElementById('notes').innerHTML = text;
+        });
+
+        socket.on('presentation_url', function (data) {
+            slideUrl = data.url;
+            document.getElementById('preview-toggle').style.display = 'block';
+        });
+
+        socket.on('state_changed', function (data) {
+            allowSwipe = data.allowSwipe;
+            document.getElementById('progress').style.width = Math.floor(data.progress * 100) + '%';
+
+            document.getElementById('next').className = data.isLastSlide ? 'disabled' : '';
+            document.getElementById('prev').className = data.isFirstSlide ? 'disabled' : '';
+            document.getElementById('left').className = data.availableRoutes.left ? '' : 'disabled';
+            document.getElementById('right').className = data.availableRoutes.right ? '' : 'disabled';
+            document.getElementById('up').className = data.availableRoutes.up ? '' : 'disabled';
+            document.getElementById('down').className = data.availableRoutes.down ? '' : 'disabled';
+
+            document.getElementById('pause').className = data.isPaused ? 'pressed' : '';
+            document.getElementById('overview').className = data.isOverview ? 'pressed' : '';
+
+            if (data.autoslide) {
+                document.getElementById('autoslide').className = data.isAutoSliding ? 'pressed' : '';
+            } else {
+                document.getElementById('autoslide').className = 'hidden';
+            }
+        });
+    }
+
+    function sendCommand(cmd) {
+        socket.emit('command', {
+            command: cmd
+        });
+    }
+
+    function command(cmd) {
+        return function () {
+            sendCommand(cmd);
+        };
+    }
+
+    function setupKeyboard() {
+        document.addEventListener('keydown', function (e) {
+            if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+            switch (e.key) {
+                case 'ArrowRight': case 'l': case 'L': sendCommand('right');    e.preventDefault(); break;
+                case 'ArrowLeft':  case 'h': case 'H': sendCommand('left');     e.preventDefault(); break;
+                case 'ArrowUp':    case 'k': case 'K': sendCommand('up');       e.preventDefault(); break;
+                case 'ArrowDown':  case 'j': case 'J': sendCommand('down');     e.preventDefault(); break;
+                case ' ': case 'PageDown': case 'n': case 'N': sendCommand('next'); e.preventDefault(); break;
+                case 'p': case 'P': case 'PageUp': sendCommand('prev');         e.preventDefault(); break;
+                case '.': case 'b': case 'B': sendCommand('pause');             e.preventDefault(); break;
+                case 'o': case 'O': case 'Escape': sendCommand('overview');     e.preventDefault(); break;
+            }
+        });
+    }
+
+    function setupSwipe() {
+        let startX = 0;
+        let startY = 0;
+        let isMoving = false;
+        const target = document.getElementById("notes");
+
+        target.addEventListener('touchstart', function (e) {
+            if (!allowSwipe) return;
+
+            if (e.touches.length === 1) {
+                startX = e.touches[0].pageX;
+                startY = e.touches[0].pageY;
+                isMoving = true;
+                target.addEventListener('touchmove', onTouchMove, false);
+                target.addEventListener('touchend', onTouchEnd, false);
+            }
+        }, false);
+
+        function onTouchEnd() {
+            target.removeEventListener('touchmove', onTouchMove);
+            target.removeEventListener('touchend', onTouchEnd);
+            isMoving = false;
+        }
+
+        function onTouchMove(e) {
+            if (isMoving) {
+                const x = e.touches[0].pageX;
+                const y = e.touches[0].pageY;
+                const dx = startX - x;
+                const dy = startY - y;
+
+                if (Math.abs(dx) >= 25) {
+                    if (Math.abs(dy) <= 50) {
+                        sendCommand(dx > 0 ? "next" : "prev");
+                    }
+
+                    onTouchEnd();
+                } else if (Math.abs(dy) > 100) {
+                    onTouchEnd();
+                }
+            }
+        }
+    }
+
+    function showMenu() {
+        document.getElementsByTagName('body')[0].className = '';
+    }
+
+    function hideMenu() {
+        document.getElementsByTagName('body')[0].className = 'collapsed';
+    }
+
+    function togglePreview() {
+        const preview = document.getElementById('preview');
+        const toggle = document.getElementById('preview-toggle');
+        if (preview.classList.contains('visible')) {
+            preview.classList.remove('visible');
+            toggle.classList.remove('active');
+        } else {
+            if (!preview.querySelector('iframe') && slideUrl) {
+                const iframe = document.createElement('iframe');
+                iframe.src = slideUrl;
+                iframe.allowFullscreen = true;
+                preview.appendChild(iframe);
+            }
+            preview.classList.add('visible');
+            toggle.classList.add('active');
+        }
+    }
+
+    init();
+
+    return {
+        next: command("next"),
+        prev: command("prev"),
+        left: command("left"),
+        right: command("right"),
+        up: command("up"),
+        down: command("down"),
+        overview: command("overview"),
+        pause: command("pause"),
+        autoslide: command("autoslide"),
+        showMenu,
+        hideMenu,
+        togglePreview,
+        zoomIn,
+        zoomOut,
+    }
+})();
