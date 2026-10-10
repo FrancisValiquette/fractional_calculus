@@ -342,8 +342,6 @@ It is used, for example, in
 		<script src="plugin/markdown/markdown.js"></script>
 		<script src="plugin/highlight/highlight.js"></script>
 		<script src="plugin/math/math.js"></script>
-		<script src="/socket.io/socket.io.min.js"></script>
-		<script src="plugin/remote.js"></script>
 		<script>
 			// More info about initialization & config:
 			// - https://revealjs.com/initialization/
@@ -353,11 +351,7 @@ It is used, for example, in
 				margin: 0,
 
 				// Learn about plugins: https://revealjs.com/plugins/
-				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX, RevealRemote ],
-				remote: {
-      			remote: true,
-      			multiplex: true
-   				 }
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes, RevealMath.KaTeX,]
 			});
 		</script>
 	</body>
