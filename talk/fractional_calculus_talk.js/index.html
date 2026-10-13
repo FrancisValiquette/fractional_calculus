@@ -28,7 +28,7 @@ In Calculus I and II
 $$
 \cdots \xleftarrow{D^{-1}} \iint f \xleftarrow{D^{-1}} \int f \xleftarrow{D^{-1}} f \overset{D}{\longrightarrow} f^\prime \overset{D}{\longrightarrow} f^{\prime\prime}  \overset{D}{\longrightarrow} \cdots
 $$
-effectively learning ``integer Calculus"
+effectively learning "integer Calculus"
 $$
 D^n[f]\qquad \text{where}\qquad n\;\in\; \mathbb{Z}
 $$
@@ -170,7 +170,7 @@ Let $f(x)$ be continuous on $[a,x]$ and $n\in \mathbb{N}$, then
 </section>
 
 <section style="font-size:medium; text-align:left">
-<h2>Riemmann--Liouville Fractional Integral</h2>
+<h2>Riemmann-Liouville Fractional Integral</h2>
 
 Substituting $(n-1)! = \Gamma(n)$ in
 \[
@@ -181,7 +181,7 @@ and replacing $n \to \alpha$ we arrive to the following generalization of the no
 <div class="fragment" style="background-color: #ffffff; border: 2px solid #3498db; padding: 25px; border-radius: 8px; margin: 20px auto; text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
         <p style="margin: 0; font-size: 0.9em; color: #2c3e50; line-height: 1.4;">
             <strong style="color: #2980b9; font-size: 1.1em; margin-right: 8px;">Definition:</strong>
-The <b>Riemann--Liouville fractional integral</b> for $\alpha >0$ is given by
+The <b>Riemann-Liouville fractional integral</b> for $\alpha >0$ is given by
 \[
 {}_aI_x^{\alpha}[f(x)] = \frac{1}{\Gamma(\alpha)}\int_a^x(x-t)^{\alpha-1} f(t)\, dt.
 \]
@@ -191,7 +191,7 @@ The <b>Riemann--Liouville fractional integral</b> for $\alpha >0$ is given by
 <div class="fragment" style="background-color: #ffffff; border: 2px solid #3498db; padding: 25px; border-radius: 8px; margin: 20px auto; text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
         <p style="margin: 0; font-size: 0.9em; color: #2c3e50; line-height: 1.4;">
             <strong style="color: #2980b9; font-size: 1.1em; margin-right: 8px;">Proposition:</strong>
-The <b>power rule</b> for the Riemann--Liouville fractional integral is
+The <b>power rule</b> for the Riemann-Liouville fractional integral is
 \[
 {}_0{I}_x^{\alpha}[x^\nu] = \frac{\Gamma(\nu+1)}{\Gamma(\nu+\alpha+1)} x^{\nu+\alpha}.
 \]
@@ -208,7 +208,7 @@ Using the fact that
 \[
 \Gamma(2) = 1! = 1,\qquad \Gamma(3) = 2! = 2,\qquad \Gamma(5/2) = \frac{3}{4}\sqrt{\pi}
 \]
-evaluate ${}_0I_{1/2}[x]$ and ${}_0I_{1/2}[x^{3/2}]$.
+evaluate ${}_0I^{1/2}_x[x]$ and ${}_0I^{1/2}_x[x^{3/2}]$.
 		</p>
 </div>		
 
@@ -260,11 +260,11 @@ compute the half derivative of $x^2$.
 </section>
 
 <section style="font-size:medium; text-align:left">
-<h2> Riemann--Liouville Fractional Derivative</h2>	
+<h2> Riemann-Liouville Fractional Derivative</h2>	
 	<div  style="background-color: #ffffff; border: 2px solid #3498db; padding: 25px; border-radius: 8px; margin: 20px auto; text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
         <p style="margin: 0; font-size: 0.9em; color: #2c3e50; line-height: 1.4;">
             <strong style="color: #2980b9; font-size: 1.1em; margin-right: 8px;">Definition:</strong>
-For $\alpha \in \mathbb{R}$, the <b>Riemann--Liouville fractional derivative</b> of $f(x)$ is given by
+For $\alpha \in \mathbb{R}$, the <b>Riemann-Liouville fractional derivative</b> of $f(x)$ is given by
 \[
 {}_aD_x^{\alpha}[f(x)] = \begin{cases}
 \bigg(\dfrac{d}{dx}\bigg)^{\lceil \alpha \rceil} {}_aI_x^{\lceil \alpha \rceil-\alpha} [f(x)] & \text{if } \alpha > 0 \\\\
@@ -278,7 +278,7 @@ For $\alpha \in \mathbb{R}$, the <b>Riemann--Liouville fractional derivative</b>
 	<div class="fragment" style="background-color: #ffffff; border: 2px solid #3498db; padding: 25px; border-radius: 8px; margin: 20px auto; text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
         <p style="margin: 0; font-size: 0.9em; color: #2c3e50; line-height: 1.4;">
             <strong style="color: #2980b9; font-size: 1.1em; margin-right: 8px;">Proposition:</strong>
-The Riemann--Liouville fractional derivative of the monomial $x^\nu$ is
+The Riemann-Liouville fractional derivative of the monomial $x^\nu$ is
 \[
 {}_0D_x^{\alpha}[x^\nu] = \frac{\Gamma(\nu+1)}{\Gamma(\nu - \alpha + 1)} x^{\nu-\alpha}.
 \]
@@ -286,8 +286,13 @@ The Riemann--Liouville fractional derivative of the monomial $x^\nu$ is
 	</div>	
 
 <p class="fragment">
-<strong style="font-size: 1.1em; margin-right: 8px;">Proof:</strong> Unpack the definition of the Riemann--Liouville fractional derivative.
+It follows, for example, that the half-derivative of the constant function $f(x)=1$ is
+\[
+{}_0D_x^{1/2}[1] = {}_0D_x^{1/2}[x^0] = \frac{\Gamma(1)}{\Gamma(1/2)} x^{-1/2} = \frac{1}{\sqrt{\pi x}}.
+\]
 </p>
+
+
 </section>
 
 <section style="font-size:medium; text-align:left">
