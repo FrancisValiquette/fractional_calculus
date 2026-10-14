@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  9 OCT 2026 17:05
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.22)  13 OCT 2026 19:12
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -875,12 +875,12 @@ ick labels; missing features). Consider writing \pgfplotsset{compat=1.18} into
 your preamble.
  on input line 56.
 
-LaTeX Font Info:    Trying to load font information for U+msa on input line 65.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 64.
 
 (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 65.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 64.
 
 
 (/usr/local/texlive/2026/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -898,10 +898,10 @@ d.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
  ) 
 Here is how much of TeX's memory you used:
- 31933 strings out of 467525
- 742794 string characters out of 5418982
- 1309732 words of memory out of 5000000
- 60343 multiletter control sequences out of 15000+600000
+ 31935 strings out of 467525
+ 742862 string characters out of 5418982
+ 1310732 words of memory out of 5000000
+ 60345 multiletter control sequences out of 15000+600000
  635442 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  102i,14n,107p,720b,532s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -913,7 +913,7 @@ sr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
 /local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/lo
 cal/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
 al/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb>
-Output written on fractional_calculus_talk.pdf (2 pages, 86851 bytes).
+Output written on fractional_calculus_talk.pdf (2 pages, 88368 bytes).
 PDF statistics:
  60 PDF objects out of 1000 (max. 8388607)
  39 compressed objects within 1 object stream
